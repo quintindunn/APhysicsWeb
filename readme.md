@@ -1,7 +1,7 @@
-# APPhysicsWeb
+# APhysicsWeb
 
 ## About:
-[APPhysics Web](https://github.com/quintindunn/APPhysicsWeb) is a project to help learn APPhysics 1. It (will) consist of calculators, simulators, and general documentation.
+[APhysics Web](https://github.com/quintindunn/APhysicsWeb) is a project to help learn APhysics 1. It (will) consist of calculators, simulators, and general documentation.
 
 ## Create Local Version:
 
@@ -11,8 +11,8 @@
 * Pip v22.3.1 
 
 ### Installation (Only tested on windows):
-1. Clone the repository: `git clone https://github.com/quintindunn/APPhysicsWeb.git APPhysicsWeb`
-2. `cd` into the repository `cd ./APPhysicsWeb`
+1. Clone the repository: `git clone https://github.com/quintindunn/APhysicsWeb.git APhysicsWeb`
+2. `cd` into the repository `cd ./APhysicsWeb`
 3. Install the requirements `pip install -r requirements.txt`
 4. Run the server: `python3 app.py`
 
