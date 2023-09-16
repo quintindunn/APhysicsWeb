@@ -5,12 +5,29 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}APPhysics Tools{% endblock title %}</title>
-    <script src="{{ url_for('static', filename="core/js/core.js") }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename="core/cs/core.css") }}">
+    <title>{% block title %}APhysics Tools{% endblock title %}</title>
+    <script src="{{ url_for('static', filename="./core/js/core.js") }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename="./core/css/core.css") }}">
     {% block head %}{% endblock head %}
 </head>
 <body>
-    {% block content %}{% endblock content %}
+    <div class="nav-bar">
+        <a href="{{ url_for("home.index") }}" class="no-anchor-decor">
+            <div class="nav-bar-title">
+                <h1>APHYSICS</h1>
+                <h1>TOOLS</h1>
+            </div>
+        </a>
+        <div class="nav-bar-content">
+            {% block navbaritems %}
+            {% endblock navbaritems %}
+        </div>
+    </div>
+    <div class="content-parent">
+        <div class="content-child">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
 </body>
 </html>

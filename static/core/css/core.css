@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+:root {
+    --nav-bar-height: 5vh;
+}
+body{
+    margin: 0;
+}
+
+.content-parent {
+    position: absolute;
+    top: var(--nav-bar-height);
+}
+
+.content-child {
+    position: static;
+}
+
+.nav-bar {
+    margin-top: 2vh;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #FBFBFB;
+    border-bottom: 0.01vh solid #dbdbdb;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    position: absolute;
+    flex-direction: row;
+    height: var(--nav-bar-height);
+    width: 100%;
+    z-index: 3;
+    padding: 0;
+}
+
+.nav-bar-content {
+    display: flex;
+    gap: 1em;
+    width: auto;
+    margin-left: auto;
+    margin-right: 2vw;
+    margin-top: -2vh;
+}
+
+.nav-bar-item {
+    padding: .5vh 1vw;
+    border: 1px solid black;
+}
+
+.nav-bar-item > * {
+    padding: 0;
+    margin: 0
+}
+
+.nav-bar-title {
+    padding: 0;
+    position: absolute;
+    left: 2vw;
+    margin-top: -2.5rem;
+}
+.nav-bar-title > h1 {
+    padding: 0;
+    margin: 0;
+
+    font-family: "JetBrains Mono", serif;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.no-anchor-decor {
+    text-decoration: none;
+    color: inherit;
+}

@@ -1,8 +1,13 @@
-{% extends 'core/core.html' %}
+{% extends 'vector2d/vector_template.html' %}
 {% block title %}2D Vector Addition Calculator{% endblock title %}
 
-{% block head %} {% endblock head %}
+{% block head %}
+    <script src="{{ url_for('static', filename="./vector2d/js/vector_addition_calculator/vector_addition_calculator.js") }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename="./vector2d/css/vector_addition_calculator/vector_addition_calculator.css") }}">
+{% endblock head %}
 
 {% block content %}
     <h1>2D Vector Addition Calculator</h1>
+    <div id="vectors-container"></div>
+    <button type="button" id="new-vector"></button>
 {% endblock content %}
