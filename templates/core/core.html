@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}APPhysics Tools{% endblock title %}</title>
+    <script src="{{ url_for('static', filename="core/js/core.js") }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename="core/cs/core.css") }}">
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    {% block content %}{% endblock content %}
+</body>
+</html>
