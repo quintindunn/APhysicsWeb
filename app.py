@@ -3,8 +3,6 @@ from routes import register_routes
 import config
 
 
-from routes import routes
-
 app = Flask(__name__)
 
 # REGISTER CONFIG SETTINGS

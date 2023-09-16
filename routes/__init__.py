@@ -1,6 +1,7 @@
 import flask
 
 from .home import home
+from .vector2d import vector2d
 
 
 def register_routes(app: flask.Flask):
@@ -12,5 +13,6 @@ def register_routes(app: flask.Flask):
 
 
 routes = [
-    (home, "")
+    (home, ""),
+    (vector2d, "/2dvectors")
 ]
