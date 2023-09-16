@@ -7,11 +7,17 @@ body{
     margin: 0;
 }
 
-.content {
-    padding-top: calc(var(--nav-bar-height));
+.content-parent {
+    position: absolute;
+    top: var(--nav-bar-height);
+}
+
+.content-child {
+    position: static;
 }
 
 .nav-bar {
+    margin-top: 2vh;
     -webkit-box-align: center;
     -webkit-align-items: center;
     -ms-flex-align: center;
@@ -26,7 +32,7 @@ body{
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    position: fixed;
+    position: absolute;
     flex-direction: row;
     height: var(--nav-bar-height);
     width: 100%;

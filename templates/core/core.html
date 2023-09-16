@@ -22,9 +22,12 @@
             {% block navbaritems %}
             {% endblock navbaritems %}
         </div>
-
     </div>
-     {% block content %}
-     {% endblock content %}
+    <div class="content-parent">
+        <div class="content-child">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
 </body>
 </html>
