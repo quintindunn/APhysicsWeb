@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
 :root {
-    --nav-bar-height: 7vh;
+    --nav-bar-height: 5vh;
 }
 body{
     margin: 0;
@@ -26,33 +26,45 @@ body{
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
     position: fixed;
+    flex-direction: row;
     height: var(--nav-bar-height);
     width: 100%;
     z-index: 3;
     padding: 0;
+}
 
+.nav-bar-content {
+    display: flex;
+    gap: 1em;
+    width: auto;
+    margin-left: auto;
+    margin-right: 2vw;
+    margin-top: -2vh;
 }
 
 .nav-bar-item {
+    padding: .5vh 1vw;
+    border: 1px solid black;
+}
 
+.nav-bar-item > * {
+    padding: 0;
+    margin: 0
 }
 
 .nav-bar-title {
     padding: 0;
     position: absolute;
-    left: 5vw;
-    margin-top: -1.25rem;
+    left: 2vw;
+    margin-top: -2.5rem;
 }
 .nav-bar-title > h1 {
     padding: 0;
     margin: 0;
 
     font-family: "JetBrains Mono", serif;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bolder;
     text-align: center;
 }
