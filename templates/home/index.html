@@ -1,7 +1,9 @@
 {% extends 'core/core.html' %}
 {% block title %}Home{% endblock title %}
 
-{% block head %} {% endblock head %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="./home/css/home.css") }}">
+{% endblock head %}
 
 {% block navbaritems %}
     <a class="no-anchor-decor" href="{{ url_for("vector2d.index") }}">
@@ -12,5 +14,22 @@
 {% endblock navbaritems %}
 
 {% block content %}
-
+    <div class="page-content">
+        <div class="heading">
+            <div class="title">
+                <h1><span>AP</span><span>hysics Tools</span></h1>
+                <hr style="width: 100%;">
+            </div>
+        </div>
+        <div class="about">
+            <div class="what-is">
+                <h1>What is APhysics Tools</h1>
+                <p>APhysics Tools is an <a href="https://github.com/quintindunn/aphysicsweb" class="no-anchor-decor" style="color:cadetblue;">open source</a> collection of simple to use tools for the AP Physics 1 course, it houses a variety of tools, such as a 2D Vector addition calculator, some other thing, another thing, and more! Additionally, there is documentation on all the used equations, when those equations can be used, and different ways to approach a given problem!</p>
+            </div>
+            <div class="about-the-creators">
+                <h1>About us</h1>
+                <p>APhysics Tools is being developed, and maintained by two current AP Physics 1 students, Quintin Dunn, and Zeke Mccrary.</p>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

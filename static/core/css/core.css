@@ -5,11 +5,14 @@
 }
 body{
     margin: 0;
+    background-color: #fafafa;
 }
 
 .content-parent {
     position: absolute;
     top: var(--nav-bar-height);
+    width: 100%;
+    height: calc(100% - var(--nav-bar-height));
 }
 
 .content-child {
@@ -22,7 +25,6 @@ body{
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    background-color: #FBFBFB;
     border-bottom: 0.01vh solid #dbdbdb;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

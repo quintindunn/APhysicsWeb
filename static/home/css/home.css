@@ -1,0 +1,41 @@
+.page-content {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+
+}
+
+.title > h1 > span:first-of-type {
+  color: #a3a3ff;
+}
+
+.title > h1 > span:last-of-type {
+    color: #1f2425;
+}
+
+.title > h1 > * {
+    position: relative;
+    font-family: "JetBrains Mono", serif;
+}
+
+.title {
+    margin-top: 4vh;
+    font-size: 5vh;
+    text-align: center;
+}
+
+.what-is {
+    margin-left: 2vw;
+    width: 60%;
+
+}
+
+.what-is > h1 {
+    font-size: 2.5rem;
+}
+
+.what-is > p {
+    text-indent: 50px;
+}
