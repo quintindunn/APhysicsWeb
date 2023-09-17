@@ -17,8 +17,7 @@ for %%i in (%python_names%) do (
     if !errorlevel! == 0 (
         :: Check if python version >= 3.5.0
         for /f %%v in ('python3 -c "import sys; print(int(sys.version_info >= (3, 5, 0)))" 2^>^&1') do set version=%%v
-            if !version! == 0 (
-                echo !version!
+            if !version! == 1 (
                 goto FOUND_PYTHON
             )
     )
