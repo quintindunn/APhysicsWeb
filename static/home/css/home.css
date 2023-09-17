@@ -1,0 +1,54 @@
+.page-content {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+
+}
+
+.title > a > h1 > span:nth-child(1) {
+  color: #a3a3ff;
+}
+
+.title > a > h1 > span:nth-child(2) {
+    color: #817a6c;
+}
+
+.title > a > h1 > * , .title > a > h1{
+    position: relative;
+    font-family: "JetBrains Mono", serif;
+}
+
+.title > a > h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.title > a > h1:nth-child(2) {
+    font-size: 7vh;
+    color: #4b463f;
+
+}
+
+.title {
+    margin-top: 4vh;
+    font-size: 5vh;
+    text-align: center;
+}
+
+.what-is, .about-the-creators {
+    margin-left: 2vw;
+    width: 60%;
+
+}
+
+.about-the-creators > h1, .what-is > h1 {
+    font-size: 2.5rem;
+    text-decoration: underline;
+}
+
+.about-the-creators > p, .what-is > p {
+    text-indent: 50px;
+    font-size: 1.1rem;
+}
