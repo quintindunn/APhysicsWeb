@@ -8,7 +8,12 @@
 
 {% block content %}
     <h1>2D Vector Addition Calculator</h1>
-    <div id="vectors-container"></div>
+    <table id="vector-table"><tbody>
+        <tr class="table-row">
+            <td class="table-box"><input class="table-input" placeholder="Magnitude"></td>
+            <td class="table-box"><input class="table-input" placeholder="Direction"></td>
+        </tr>
+    </tbody></table>
     <br>
-    <button type="button" id="vector-button">Add Vector</button>
+    <button type="submit">Calculate</button>
 {% endblock content %}

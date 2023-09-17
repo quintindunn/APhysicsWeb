@@ -11,3 +11,4 @@ async def index():
 @vector2d.route("/2dcalculator")  # http://localhost/2dvectors/2dcalculator
 def vector_addition_calculator():
     return render_template("vector2d/vector_addition_calculator.html")
+

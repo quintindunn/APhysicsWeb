@@ -1,0 +1,16 @@
+table {
+    border: 2px solid black;
+    letter-spacing: 1px;
+}
+
+tr, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.table-input {
+    border: none;
+}
+.table-input:focus {
+    outline: none;
+}
