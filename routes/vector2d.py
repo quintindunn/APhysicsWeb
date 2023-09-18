@@ -26,4 +26,3 @@ def vector_addition_calculator():
     :return:
     """
     return render_template("vector2d/vector_addition_calculator.html")
-
