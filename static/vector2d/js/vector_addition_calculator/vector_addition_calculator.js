@@ -15,7 +15,7 @@ function addRow(event) {
         box1.setAttribute("class", "table-box");
         let inp1 = document.createElement("input");
         inp1.setAttribute("class", "table-input");
-        inp1.setAttribute("placeholder", "Magnitude (m)");
+        inp1.setAttribute("placeholder", "Magnitude");
         box1.append(inp1);
         
         // but I don't know one
@@ -113,9 +113,8 @@ function calculate(event) {
         else {
             outputDiv.setAttribute("style", "color: black"); outputDiv.innerText = "";
             let answer = addVectors(vectorArray);
-            let magDiv = document.createElement("div"); magDiv.innerText = answer[0] + "m";
-            let dirDiv = document.createElement("div"); dirDiv.innerText = answer[1] + "°";
-            outputDiv.innerText = "at";
+            let magDiv = document.createElement("div"); magDiv.innerText = "Magnitude: " + answer[0];
+            let dirDiv = document.createElement("div"); dirDiv.innerText = "Direction: " + answer[1] + "°";
             outputDiv.prepend(magDiv);
             outputDiv.append(dirDiv);
         }
