@@ -11,6 +11,10 @@ tr, td {
     text-align: center;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 .table-input {
     border: none;
     width: 95%;
@@ -40,9 +44,28 @@ tr, td {
     text-align: center;
 }
 
-#output-div {
-    border: 1px solid black;
+.option-div {
     text-align: center;
+    width: 25vw;
+}
+.option-div:hover {
+    cursor: pointer;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+}
+
+#output-div {
+    border: 2px solid black;
+    text-align: center;
+}
+
+#steps-div {
+    border: 1px solid gray;
+    text-align: center;
+    font-size: 0.8rem;
 }
 
 #output-div > div {

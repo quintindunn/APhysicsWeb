@@ -61,30 +61,32 @@ function addRow(event) {
 function addVectors(args) {
     let xTotal = 0;
     let yTotal = 0;
-    console.log(args)
+    let newX, newY;
+    let stepsDiv = document.getElementById("steps-div");
 
     for (let i = 0; i < args.length; i++) {
         let vector = args[i];
-        console.log(`Vector: ${vector}`);
-        let messagep1 = `Updating x and y totals:\n${xTotal} -> `;
-        let messagep2 = `\n${yTotal} ->`
+        stepsDiv.innerText += `Converting vector: ${vector}\n`;
 
-        if (vector[1] === 0) { xTotal += vector[0]; } // speed up the math for 0 degree cases to skip multiplying by 0 a lot
+        if (vector[1] === 0) { // speed up the math for 0 degree cases to skip multiplying by 0 a lot
+            stepsDiv.innerText += `Finished: (${vector[0]}, 0)\n`;
+            xTotal += vector[0];
+        } 
         else { // SOHCAHTOA
-            xTotal += vector[0] * Math.cos(vector[1] * Math.PI / 180); // cos(degrees) = xDisp / magnitude
-            yTotal += vector[0] * Math.sin(vector[1] * Math.PI / 180); // sin(degrees) = yDisp / magnitude
+            newX = vector[0] * Math.cos(vector[1] * Math.PI / 180); // cos(degrees) = xDisp / magnitude
+            newY = vector[0] * Math.sin(vector[1] * Math.PI / 180); // sin(degrees) = yDisp / magnitude
+
+            stepsDiv.innerText += `${vector[0]} * cos(${vector[1]}) = ${newX}, ${vector[0]} * sin(${vector[1]}) = ${newY}\nFinished: (${newX}, ${newY})\n`;
+            xTotal += newX;
+            yTotal += newY;
         }
-
-        messagep1 += xTotal;
-        messagep2 += yTotal;
-
-        console.log(messagep1 + messagep2);
     }
 
     let finalMag = Math.sqrt(xTotal**2 + yTotal**2); // totalX^2 + totalY^2 = totalDisp^2
     let finalDir = Math.atan(yTotal / xTotal) * 180 / Math.PI; // tan(totalDegree) = totalY / totalX
-    console.log(`Result: ${finalMag}m at ${finalDir}°`)
+    stepsDiv.innerText += `\nConversions complete. Totals:\nMagnitude: ${finalMag}\nDirection (raw): ${finalDir}\n`;
 
+    let quad = 1;
     /* quadrant II:
         resulting angle (finalDir) will be negative because its the arctan of a negative number
         the angle relative to positive x-axis would be the angle adjacent to finalDir
@@ -94,14 +96,17 @@ function addVectors(args) {
          the correct angle will be finalDir + 180
     */ 
     if (xTotal < 0)
-    { finalDir += 180; }
+    { finalDir += 180; quad = yTotal < 0 ? 3 : 2; }
     /* quadrant IV:
         finalDir will be negative
         because its in quadrant IV the angle measure relative to the x-axis in quad I ==
         360 - abs(finalDir) == 360 + finalDir
     */
     else if (yTotal < 0)
-    { finalDir += 360; }
+    { finalDir += 360; quad = 4; }
+
+    if (quad !== 1)
+    { stepsDiv.innerText += `Angle in Quadrant ${quad}. Refactoring angle to relate to origin.\nDirection (relative): ${finalDir}`; }
 
     return [finalMag, finalDir];
 }
@@ -111,6 +116,8 @@ document.getElementById("calculate-button").addEventListener("click", calculate)
 
 function calculate(event) {
     if (event.button === 0) {
+        document.getElementById("steps-div").innerText = "";
+
         let vectorArray = [];
 
         for (let row of document.getElementsByClassName("table-row")) {
@@ -145,6 +152,8 @@ function calculate(event) {
 document.getElementById("clear-button").addEventListener("click", clearTable);
 
 function clearTable(event) {
+    document.getElementById("steps-div").innerText = "";
+
     document.getElementById("vector-table").children[0].remove();
     let tBody = document.createElement("tbody");
 
@@ -164,4 +173,23 @@ function clearTable(event) {
     
     tBody.append(tRow);
     document.getElementById("vector-table").append(tBody);
+}
+
+
+let showMathDiv = document.getElementById("show-math");
+showMathDiv.addEventListener("click", enableMathDisplay);
+
+function enableMathDisplay(event) {
+    if (event.button === 0) {
+        if (showMathDiv.getAttribute("data-active") === "true") { 
+            showMathDiv.setAttribute("style", "background-color: lightgray");
+            showMathDiv.setAttribute("data-active", "false");
+            document.getElementById("steps-div").setAttribute("style", "visibility: hidden");
+        }
+        else if (showMathDiv.getAttribute("data-active") === "false") {
+            showMathDiv.setAttribute("style", "background-color: cadetblue");
+            showMathDiv.setAttribute("data-active", "true");
+            document.getElementById("steps-div").setAttribute("style", "visibility: visible");
+        }
+    }
 }
