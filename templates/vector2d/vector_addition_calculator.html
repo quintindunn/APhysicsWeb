@@ -2,12 +2,29 @@
 {% block title %}2D Vector Addition Calculator{% endblock title %}
 
 {% block head %}
-    <script src="{{ url_for('static', filename="./vector2d/js/vector_addition_calculator/vector_addition_calculator.js") }}"></script>
+    <script src="{{ url_for('static', filename="./vector2d/js/vector_addition_calculator/vector_addition_calculator.js") }}" defer></script>
     <link rel="stylesheet" href="{{ url_for('static', filename="./vector2d/css/vector_addition_calculator/vector_addition_calculator.css") }}">
 {% endblock head %}
 
 {% block content %}
-    <h1>2D Vector Addition Calculator</h1>
-    <div id="vectors-container"></div>
-    <button type="button" id="new-vector"></button>
+    <div class="page-content">
+        <div class="heading">
+            <h1>2D Vector Addition Calculator</h1>
+            <p>This calculator uses sin and cos functions to convert each vector to Cartesian coordinates, then add them together and convert the result back to polar coordinates, which is displayed to the user.</p>
+        </div>
+        <hr style="width: 100%; margin: 2vh 0;">
+        <table id="vector-table"><tbody>
+            <tr class="table-row">
+                <td class="table-box"><input class="table-input" placeholder="Magnitude"></td>
+                <td class="table-box"><input class="table-input" placeholder="Direction (degrees)"></td>
+            </tr>
+        </tbody></table>
+        <br>
+        <div class="controls">
+            <button id="calculate-button">Calculate</button>
+            <button id="clear-button">Clear</button>
+        </div>
+        <br>
+        <div id="output-div" style="color: black"></div>
+    </div>
 {% endblock content %}
