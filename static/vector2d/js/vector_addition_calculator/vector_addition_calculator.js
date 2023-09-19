@@ -58,11 +58,12 @@ function addRow(event) {
 
 
 // I wish js had explicit typing so I could specify this function takes multiple vectors (i.e., vector: [i32; 2])
-function addVectors(args) {
+function sumVectors(args) {
     let xTotal = 0;
     let yTotal = 0;
     let newX, newY;
     let stepsDiv = document.getElementById("steps-div");
+    stepsDiv.style.borderStyle = "solid";
 
     for (let i = 0; i < args.length; i++) {
         let vector = args[i];
@@ -117,6 +118,7 @@ document.getElementById("calculate-button").addEventListener("click", calculate)
 function calculate(event) {
     if (event.button === 0) {
         document.getElementById("steps-div").innerText = "";
+        document.getElementById("steps-div").style.borderStyle = "hidden";
 
         let vectorArray = [];
 
@@ -138,7 +140,7 @@ function calculate(event) {
         }
         else {
             outputDiv.setAttribute("style", "color: black"); outputDiv.innerText = "";
-            let answer = addVectors(vectorArray);
+            let answer = sumVectors(vectorArray);
             let magDiv = document.createElement("div"); magDiv.innerText = "Magnitude: " + answer[0];
             let dirDiv = document.createElement("div"); dirDiv.innerText = "Direction: " + answer[1] + "°";
             let dirClampedDiv = document.createElement("div"); dirClampedDiv.innerText = "Direction (-180 to 180): " + clamp_n180_180(answer[1]) + "°";
@@ -153,6 +155,7 @@ document.getElementById("clear-button").addEventListener("click", clearTable);
 
 function clearTable(event) {
     document.getElementById("steps-div").innerText = "";
+    document.getElementById("steps-div").style.borderStyle = "hidden";
 
     document.getElementById("vector-table").children[0].remove();
     let tBody = document.createElement("tbody");
@@ -176,20 +179,20 @@ function clearTable(event) {
 }
 
 
-let showMathDiv = document.getElementById("show-math");
-showMathDiv.addEventListener("click", enableMathDisplay);
+let showMath = document.getElementById("show-math");
+showMath.addEventListener("click", enableMathDisplay);
 
 function enableMathDisplay(event) {
     if (event.button === 0) {
-        if (showMathDiv.getAttribute("data-active") === "true") { 
-            showMathDiv.setAttribute("style", "background-color: lightgray");
-            showMathDiv.setAttribute("data-active", "false");
-            document.getElementById("steps-div").setAttribute("style", "visibility: hidden");
+        if (showMath.getAttribute("data-active") === "true") { 
+            showMath.setAttribute("style", "background-color: lightgray");
+            showMath.setAttribute("data-active", "false");
+            document.getElementById("steps-div").style.visibility = "hidden";
         }
-        else if (showMathDiv.getAttribute("data-active") === "false") {
-            showMathDiv.setAttribute("style", "background-color: cadetblue");
-            showMathDiv.setAttribute("data-active", "true");
-            document.getElementById("steps-div").setAttribute("style", "visibility: visible");
+        else if (showMath.getAttribute("data-active") === "false") {
+            showMath.setAttribute("style", "background-color: cadetblue");
+            showMath.setAttribute("data-active", "true");
+            document.getElementById("steps-div").style.visibility = "visible";
         }
     }
 }
