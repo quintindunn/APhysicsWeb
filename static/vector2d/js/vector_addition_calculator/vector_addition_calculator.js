@@ -1,5 +1,13 @@
 console.log("Vector Calculator");
 
+const translations = {
+    en: {
+        magnitude: "Magnitude",
+        direction: "Direction (degrees)",
+        no_vectors: "Please put in at least two vectors",
+    }
+};
+
 let rows = document.getElementsByClassName("table-row");
 let bottomRow = rows[rows.length - 1];
 bottomRow.addEventListener("keyup", addRow);
@@ -15,7 +23,7 @@ function addRow(event) {
         box1.setAttribute("class", "table-box");
         let inp1 = document.createElement("input");
         inp1.setAttribute("class", "table-input");
-        inp1.setAttribute("placeholder", "Magnitude");
+        inp1.setAttribute("placeholder", translations.en.magnitude);
         box1.append(inp1);
         
         // but I don't know one
@@ -23,7 +31,7 @@ function addRow(event) {
         box2.setAttribute("class", "table-box");
         let inp2 = document.createElement("input");
         inp2.setAttribute("class", "table-input");
-        inp2.setAttribute("placeholder", "Direction (degrees)");
+        inp2.setAttribute("placeholder", translations.en.direction);
         box2.append(inp2);
 
         row.append(box1, box2);
@@ -108,7 +116,7 @@ function calculate(event) {
 
         let outputDiv = document.getElementById("output-div");
         if (vectorArray.length < 1) {
-            outputDiv.setAttribute("style", "color: red"); outputDiv.innerText = "Please put in at least two vectors";
+            outputDiv.setAttribute("style", "color: red"); outputDiv.innerText = translations.en.no_vectors;
         }
         else {
             outputDiv.setAttribute("style", "color: black"); outputDiv.innerText = "";
@@ -130,11 +138,11 @@ function clearTable(event) {
     let tRow = document.createElement("tr"); tRow.setAttribute("class", "table-row");
 
     let tBox1 = document.createElement("td"); tBox1.setAttribute("class", "table-box");
-    let inp1 = document.createElement("input"); inp1.setAttribute("class", "table-input"); inp1.setAttribute("placeholder", "Magnitude (m)");
+    let inp1 = document.createElement("input"); inp1.setAttribute("class", "table-input"); inp1.setAttribute("placeholder", translations.en.magnitude);
     tBox1.append(inp1);
 
     let tBox2 = document.createElement("td"); tBox2.setAttribute("class", "table-box");
-    let inp2 = document.createElement("input"); inp2.setAttribute("class", "table-input"); inp2.setAttribute("placeholder", "Direction (degrees)");
+    let inp2 = document.createElement("input"); inp2.setAttribute("class", "table-input"); inp2.setAttribute("placeholder", translations.en.direction);
     tBox2.append(inp2);
 
     tRow.append(tBox1, tBox2);
