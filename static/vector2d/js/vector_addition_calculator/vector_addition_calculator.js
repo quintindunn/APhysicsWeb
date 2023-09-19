@@ -12,6 +12,17 @@ let rows = document.getElementsByClassName("table-row");
 let bottomRow = rows[rows.length - 1];
 bottomRow.addEventListener("keyup", addRow);
 
+
+function clamp_n180_180(degrees) {
+    degrees = degrees % 360;
+
+    if (degrees > 180) {
+        degrees -= 360;
+    }
+    return degrees;
+}
+
+
 function addRow(event) {
     let inputs = bottomRow.children; // actually the td wrappers for the inputs
     if (inputs[0].children[0].value !== "" || inputs[1].children[0].value !== "") { // check if the bottom row is not empty
@@ -123,8 +134,10 @@ function calculate(event) {
             let answer = addVectors(vectorArray);
             let magDiv = document.createElement("div"); magDiv.innerText = "Magnitude: " + answer[0];
             let dirDiv = document.createElement("div"); dirDiv.innerText = "Direction: " + answer[1] + "°";
+            let dirClampedDiv = document.createElement("div"); dirClampedDiv.innerText = "Direction (-180 to 180): " + clamp_n180_180(answer[1]) + "°";
             outputDiv.prepend(magDiv);
             outputDiv.append(dirDiv);
+            outputDiv.append(dirClampedDiv);
         }
     }
 }
