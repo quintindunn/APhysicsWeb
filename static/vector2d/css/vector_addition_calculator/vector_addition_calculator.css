@@ -1,6 +1,9 @@
 table {
+    margin: 0 auto;
     border: 2px solid black;
     letter-spacing: 1px;
+    width: 40vw;
+
 }
 
 tr, td {
@@ -10,7 +13,37 @@ tr, td {
 
 .table-input {
     border: none;
+    width: 95%;
+    height: 95%;
+    background: transparent;
 }
 .table-input:focus {
     outline: none;
+}
+
+.controls {
+    margin: 0 auto;
+}
+
+.controls > button {
+    width: 20vw;
+}
+
+.page-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 4vw;
+}
+
+.heading {
+    text-align: center;
+}
+
+#output-div {
+    border: 1px solid black;
+    text-align: center;
+}
+
+#output-div > div {
 }

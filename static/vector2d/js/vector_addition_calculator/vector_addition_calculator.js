@@ -23,7 +23,7 @@ function addRow(event) {
         box2.setAttribute("class", "table-box");
         let inp2 = document.createElement("input");
         inp2.setAttribute("class", "table-input");
-        inp2.setAttribute("placeholder", "Direction");
+        inp2.setAttribute("placeholder", "Direction (degrees)");
         box2.append(inp2);
 
         row.append(box1, box2);
@@ -113,9 +113,8 @@ function calculate(event) {
         else {
             outputDiv.setAttribute("style", "color: black"); outputDiv.innerText = "";
             let answer = addVectors(vectorArray);
-            let magDiv = document.createElement("div"); magDiv.innerText = answer[0] + "m";
-            let dirDiv = document.createElement("div"); dirDiv.innerText = answer[1] + "°";
-            outputDiv.innerText = "at";
+            let magDiv = document.createElement("div"); magDiv.innerText = "Magnitude: " + answer[0];
+            let dirDiv = document.createElement("div"); dirDiv.innerText = "Direction: " + answer[1] + "°";
             outputDiv.prepend(magDiv);
             outputDiv.append(dirDiv);
         }
