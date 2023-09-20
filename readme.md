@@ -7,8 +7,8 @@
 
 ### Prerequisites:
 **(The versions are what the project is tested on, lower versions may still work, older version too may not work)**
-* Python v3.11.1
-* Pip v22.3.1 
+* Python >= v3.7.0
+* Pip (Update to most recent version)
 
 ## Installation:
 
