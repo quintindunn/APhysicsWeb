@@ -1,9 +1,13 @@
+"""
+authors: Quintin Dunn, Zeke Mccrary
+date: 9/16/23
+description: Entry point for the program, registers blueprints, runs the dev server
+"""
+
 from flask import Flask
 from routes import register_routes
 import config
 
-
-from routes import routes
 
 app = Flask(__name__)
 
