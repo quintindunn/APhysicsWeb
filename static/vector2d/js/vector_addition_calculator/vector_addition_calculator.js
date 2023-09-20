@@ -57,6 +57,13 @@ function addRow(event) {
 }
 
 
+function addStep(parent, content) {
+    let paragraph = document.createElement("p");
+    paragraph.innerText = content;
+    parent.append(paragraph);
+}
+
+
 // I wish js had explicit typing so I could specify this function takes multiple vectors (i.e., vector: [i32; 2])
 function sumVectors(args) {
     let xTotal = 0;
@@ -67,17 +74,20 @@ function sumVectors(args) {
 
     for (let i = 0; i < args.length; i++) {
         let vector = args[i];
-        stepsDiv.innerText += `Converting vector: ${vector}\n`;
+        addStep(stepsDiv, `Converting vector: ${vector}`);
+
 
         if (vector[1] === 0) { // speed up the math for 0 degree cases to skip multiplying by 0 a lot
-            stepsDiv.innerText += `Finished: (${vector[0]}, 0)\n`;
+            addStep(stepsDiv, `Finished: (${vector[0]}, 0)`);
             xTotal += vector[0];
         } 
         else { // SOHCAHTOA
             newX = vector[0] * Math.cos(vector[1] * Math.PI / 180); // cos(degrees) = xDisp / magnitude
             newY = vector[0] * Math.sin(vector[1] * Math.PI / 180); // sin(degrees) = yDisp / magnitude
 
-            stepsDiv.innerText += `${vector[0]} * cos(${vector[1]}) = ${newX}, ${vector[0]} * sin(${vector[1]}) = ${newY}\nFinished: (${newX}, ${newY})\n`;
+            addStep(stepsDiv, `${vector[0]} * cos(${vector[1]}) = ${newX}, ${vector[0]} * sin(${vector[1]}) = ${newY}`);
+            addStep(stepsDiv, `Finished: (${newX}, ${newY})`);
+
             xTotal += newX;
             yTotal += newY;
         }
@@ -85,7 +95,10 @@ function sumVectors(args) {
 
     let finalMag = Math.sqrt(xTotal**2 + yTotal**2); // totalX^2 + totalY^2 = totalDisp^2
     let finalDir = Math.atan(yTotal / xTotal) * 180 / Math.PI; // tan(totalDegree) = totalY / totalX
-    stepsDiv.innerText += `\nConversions complete. Totals:\nMagnitude: ${finalMag}\nDirection (raw): ${finalDir}\n`;
+    addStep(stepsDiv, `Conversions complete. Totals:`);
+    addStep(stepsDiv, `Magnitude: ${finalMag}`);
+    addStep(stepsDiv, `Direction (raw): ${finalDir}`);
+
 
     let quad = 1;
     /* quadrant II:
@@ -107,7 +120,10 @@ function sumVectors(args) {
     { finalDir += 360; quad = 4; }
 
     if (quad !== 1)
-    { stepsDiv.innerText += `Angle in Quadrant ${quad}. Refactoring angle to relate to origin.\nDirection (relative): ${finalDir}`; }
+    {
+        addStep(stepsDiv, `Angle in Quadrant ${quad}. Refactoring angle to relate to origin.`);
+        addStep(stepsDiv, `Direction (relative): ${finalDir}`);
+    }
 
     return [finalMag, finalDir];
 }
@@ -184,15 +200,16 @@ showMath.addEventListener("click", enableMathDisplay);
 
 function enableMathDisplay(event) {
     if (event.button === 0) {
+        let stepsDiv = document.getElementById("steps-div");
         if (showMath.getAttribute("data-active") === "true") { 
             showMath.setAttribute("style", "background-color: lightgray");
             showMath.setAttribute("data-active", "false");
-            document.getElementById("steps-div").style.visibility = "hidden";
+            stepsDiv.setAttribute("data-active", "false");
         }
         else if (showMath.getAttribute("data-active") === "false") {
             showMath.setAttribute("style", "background-color: cadetblue");
             showMath.setAttribute("data-active", "true");
-            document.getElementById("steps-div").style.visibility = "visible";
+            stepsDiv.setAttribute("data-active", "true");
         }
     }
 }

@@ -70,3 +70,13 @@ button:hover {
 
 #output-div > div {
 }
+
+#steps-div[data-active="true"] {
+    display: block;
+    border: 1px solid black;
+}
+
+#steps-div[data-active="false"] {
+    display: none;
+    border-style: hidden;
+}
