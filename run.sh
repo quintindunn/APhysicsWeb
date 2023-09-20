@@ -1,1 +1,2 @@
-python3 app.py
+source venv/bin/activate
+python app.py
