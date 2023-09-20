@@ -1,0 +1,82 @@
+table {
+    margin: 0 auto;
+    border: 2px solid black;
+    letter-spacing: 1px;
+    width: 40vw;
+
+}
+
+tr, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.table-input {
+    border: none;
+    width: 95%;
+    height: 95%;
+    background: transparent;
+}
+.table-input:focus {
+    outline: none;
+}
+
+.controls {
+    margin: 0 auto;
+}
+
+.controls > button {
+    width: 20vw;
+}
+
+.page-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 4vw;
+}
+
+.heading {
+    text-align: center;
+}
+
+.option-div {
+    text-align: center;
+    width: 25vw;
+}
+.option-div:hover {
+    cursor: pointer;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+}
+
+#output-div {
+    border: 2px solid black;
+    text-align: center;
+}
+
+#steps-div {
+    border: 1px solid gray;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+#output-div > div {
+}
+
+#steps-div[data-active="true"] {
+    display: block;
+    border: 1px solid black;
+}
+
+#steps-div[data-active="false"] {
+    display: none;
+    border-style: hidden;
+}
