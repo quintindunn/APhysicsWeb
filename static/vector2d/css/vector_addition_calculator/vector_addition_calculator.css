@@ -68,7 +68,8 @@ button:hover {
     font-size: 0.8rem;
 }
 
-#output-div > div {
+#output-div:empty {
+    border: none;
 }
 
 #steps-div[data-active="true"] {
