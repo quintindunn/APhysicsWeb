@@ -5,13 +5,12 @@ description: Entry point for the program, registers blueprints, runs the dev ser
 """
 
 import mimetypes
-mimetypes.add_type("application/javascript", ".js")
-mimetypes.add_type("text/css", ".css")
-
 from flask import Flask
 from routes import register_routes
 import config
 
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
 
 app = Flask(__name__)
 
