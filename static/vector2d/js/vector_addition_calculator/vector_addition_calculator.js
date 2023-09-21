@@ -2,6 +2,7 @@ let rows = document.getElementsByClassName("table-row");
 let vector_table = document.getElementById("vector-table");
 let showMath = document.getElementById("show-math");
 let stepsDiv = document.getElementById("steps-div");
+let outputDiv = document.getElementById("output-div");
 
 let bottomRow = rows[rows.length - 1];
 
@@ -154,8 +155,6 @@ function calculate(event) {
             vectorArray.push([mag, dir]);
         }
 
-        let outputDiv = document.getElementById("output-div");
-
         if (vectorArray.length < 1) {
             outputDiv.setAttribute("style", "color: red");
             outputDiv.innerText = translations.en.no_vectors;
@@ -178,6 +177,15 @@ function calculate(event) {
     }
 }
 
+
+function clear(event) {
+    clearTable(event);
+    clearOutput(event);
+}
+
+function clearOutput(event) {
+    outputDiv.innerHTML = "";
+}
 
 function clearTable(event) {
     stepsDiv.innerText = "";
@@ -232,6 +240,6 @@ function enableMathDisplay(event) {
 // Register event listeners
 showMath.addEventListener("click", enableMathDisplay);
 
-document.getElementById("clear-button").addEventListener("click", clearTable);
+document.getElementById("clear-button").addEventListener("click", clear);
 document.getElementById("calculate-button").addEventListener("click", calculate);
 bottomRow.addEventListener("keyup", addRow);
