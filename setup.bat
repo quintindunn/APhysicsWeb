@@ -43,6 +43,11 @@ if !version! == 1 (
         python -c "import os;print(os.urandom(32))" > FLASK_SECRET.key
     )
 
+    echo Installing NPM packages.
+    cd static
+    npm install
+    cd ..
+
     echo Finished setting up, you can now run the server by running run.bat
 ) else (
     echo Couldn't find a valid version of python 3.7 or greater, are you sure that it's in the path?

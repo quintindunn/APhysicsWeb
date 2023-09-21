@@ -3,7 +3,7 @@
 echo "Setting up server"
 echo "Searching for python3 executable..."
 
-python_names=("python3", "python", "py3", "py")
+python_names=("python3")
 found_version=0
 
 for python_exe in "${python_names[@]}"; do
@@ -45,6 +45,11 @@ if [ "$found_version" -eq 1 ]; then
         echo "Generating a flask secret"
         python -c "import os;print(os.urandom(32))" > FLASK_SECRET.key
     fi
+
+    echo "Installing NPM packages."
+    cd static
+    npm install
+    cd ..
 
     echo "Finished setting up, you can now run the server."
 else
