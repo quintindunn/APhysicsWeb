@@ -5,7 +5,7 @@ description: Routes for graphs
 """
 
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, Response
 
 graphs = Blueprint("graphs", __name__)
 

@@ -1,10 +1,12 @@
 {% extends 'graphs/graph_template.html' %}
 {% block title %} {% endblock title %}
 
-{% block head %} {% endblock head %}
+{% block head %}
+    <script type="module" src="{{ url_for("static", filename="./graphs/js/dva_graphs/dva_graphs.js") }}"></script>
+{% endblock head %}
 
 {% block content %}
     <div class="page-content">
-    
+        <div id="container"></div>
     </div>
 {% endblock content %}

@@ -4,6 +4,10 @@ date: 9/16/23
 description: Entry point for the program, registers blueprints, runs the dev server
 """
 
+import mimetypes
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
+
 from flask import Flask
 from routes import register_routes
 import config
