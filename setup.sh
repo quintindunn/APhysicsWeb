@@ -3,7 +3,7 @@
 echo "Setting up server"
 echo "Searching for python3 executable..."
 
-python_names=("python3", "python", "py3", "py")
+python_names=("python3")
 found_version=0
 
 for python_exe in "${python_names[@]}"; do
