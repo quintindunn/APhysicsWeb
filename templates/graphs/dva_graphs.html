@@ -10,9 +10,15 @@
     <div class="page-content">
         <div id="settings">
             <button class="zoom-button" id="zoom-in">Zoom In</button>
+            <input type="number" id="factor" value="10" min="1">
             <button class="zoom-button" id="zoom-out">Zoom Out</button>
         </div>
         <br>
         <div id="container"></div>
+
+        <div id="mouse-stuff">
+            <span class="mouse-coord"> X: <input type="number" id="mouse-x" value=""> </span>
+            <span class="mouse-coord"> Y: <input type="number" id="mouse-y" value=""> </span>
+        </div>
     </div>
 {% endblock content %}

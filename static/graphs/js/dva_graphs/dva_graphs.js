@@ -4,8 +4,8 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Declare the chart dimensions and margins.
 const margin = { top: 20, bottom: 30, right: 20, left: 40}, 
-      width  = 640,
-      height = 640;
+      width  = 500,
+      height = 500;
 
 // Declare the default axes
 let domain = [0, 100];
@@ -38,18 +38,20 @@ function appendAxes() {
 
     // Add the x-axis.
     let xAxis = svg.append("g")
-    .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x));
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(x));
 
     // Add the y-axis.
     let yAxis = svg.append("g")
-    .attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y));
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(y));
 
     return [xAxis, yAxis];
 }
 
 function zoom(factor) {
+
+
     domain[1] *= factor;
     range[1] *= factor;
 
@@ -60,6 +62,33 @@ function zoom(factor) {
     axes[1].transition().duration(500).call(d3.axisLeft(y));
 }
 
-document.getElementById("zoom-out").addEventListener("click", e => zoom(10) );
-document.getElementById("zoom-in").addEventListener("click", e => zoom(0.1) );
-// console.log(Parser.evaluate('6 * x^2', { x: 7 }));
+
+document.getElementById("zoom-out").addEventListener("click", e => {
+    if (e.button == 0) { zoom(+document.getElementById("factor").value); }
+});
+
+document.getElementById("zoom-in").addEventListener("click", e => {
+    if (e.button == 0) { zoom(1 / +document.getElementById("factor").value); }
+});
+
+
+function mouseCoords(event) {
+    let current = document.activeElement.getAttribute("id");
+
+    if (current !== "mouse-x" && current !== "mouse-y") {
+
+        // get current mouse positions with relation to the svg
+        let x = event.offsetX - margin.left;
+        let y = -(event.offsetY - height + margin.bottom);
+
+        // fix both values
+        x = Math.floor(x / (width - margin.left - margin.right) * domain[1] + 0.5);
+        y = Math.floor(y / (height - margin.bottom - margin.top) * range[1] + 0.5);
+
+        document.getElementById("mouse-x").value = x;
+        document.getElementById("mouse-y").value = y;
+
+    }
+}
+
+document.body.addEventListener("mousemove", mouseCoords);
