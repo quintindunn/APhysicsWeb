@@ -3,15 +3,15 @@
 echo "Setting up server"
 echo "Searching for python3 executable..."
 
-python_names=("python3")
+python_names=("python3", "python", "py3", "py")
 found_version=0
 
 for python_exe in "${python_names[@]}"; do
     echo "Checking for $python_exe in path"
 
     if command -v "$python_exe" >/dev/null 2>&1; then
-        # Check if python version >= 3.5.0
-        version=$(python3 -c "import sys; print(int(sys.version_info >= (3, 5, 0)))" 2>&1)
+        # Check if python version >= 3.7.0
+        version=$(python3 -c "import sys; print(int(sys.version_info >= (3, 7, 0)))" 2>&1)
         if [ "$version" -eq 1 ]; then
             found_version=1
             break
@@ -20,7 +20,7 @@ for python_exe in "${python_names[@]}"; do
 done
 
 if [ "$found_version" -eq 1 ]; then
-    echo "Found python 3.5 or greater in path!"
+    echo "Found python 3.7 or greater in path!"
     if [ ! -d "venv" ]; then
         echo "Creating virtual environment."
 
@@ -46,7 +46,12 @@ if [ "$found_version" -eq 1 ]; then
         python -c "import os;print(os.urandom(32))" > FLASK_SECRET.key
     fi
 
+    echo "Installing NPM packages."
+    cd static
+    npm install
+    cd ..
+
     echo "Finished setting up, you can now run the server."
 else
-    echo "Couldn't find a valid version of python3.5 or greater, are you sure that it's in the path?"
+    echo "Couldn't find a valid version of python3.7 or greater, are you sure that it's in the path?"
 fi

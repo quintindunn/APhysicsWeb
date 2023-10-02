@@ -1,0 +1,21 @@
+{% extends 'core/core.html' %}
+{% block title %}Graphing{% endblock title %}
+
+{% block head %} {% endblock head %}
+
+{% block navbaritems %}
+    <a class="no-anchor-decor" href="{{ url_for("graphs.index") }}">
+        <div class="nav-bar-item">
+            <h2>Graphs</h2>
+        </div>
+    </a>
+    <a class="no-anchor-decor" href="{{ url_for("graphs.dva_graphs") }}">
+        <div class="nav-bar-item">
+            <h2>DVA Graphs</h2>
+        </div>
+    </a>
+{% endblock navbaritems %}
+
+{% block content %}
+
+{% endblock content %}

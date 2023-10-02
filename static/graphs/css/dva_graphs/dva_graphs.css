@@ -1,0 +1,40 @@
+:root {
+    --coordsize: 12px;
+}
+
+.page-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 4vw;
+}
+
+#factor {
+    width: 20px;
+    -moz-appearance: textfield;
+}
+
+#factor::-webkit-outer-spin-button,
+#factor::-webkit-inner-spin-button,
+.mouse-coord input::-webkit-outer-spin-button,
+.mouse-coord input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+#mouse-stuff {
+    margin-left: 20px;
+    font-size: var(--coordsize);
+}
+
+.mouse-coord input {
+    -moz-appearance: textfield;
+    font-size: var(--coordsize);
+    height: var(--coordsize);
+    width: fit-content;
+    border: none;
+    background: none;
+}
+
+.mouse-coord input:focus {
+    outline: none;
+}

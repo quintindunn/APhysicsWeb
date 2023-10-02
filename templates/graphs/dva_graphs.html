@@ -1,0 +1,24 @@
+{% extends 'graphs/graph_template.html' %}
+{% block title %} {% endblock title %}
+
+{% block head %}
+    <script type="module" src="{{ url_for("static", filename="./graphs/js/dva_graphs/dva_graphs.js") }}"></script>
+    <link rel="stylesheet" href="{{ url_for("static", filename="./graphs/css/dva_graphs/dva_graphs.css") }}">
+{% endblock head %}
+
+{% block content %}
+    <div class="page-content">
+        <div id="settings">
+            <button class="zoom-button" id="zoom-in">Zoom In</button>
+            <input type="number" id="factor" value="10" min="1">
+            <button class="zoom-button" id="zoom-out">Zoom Out</button>
+        </div>
+        <br>
+        <div id="container"></div>
+
+        <div id="mouse-stuff">
+            <span class="mouse-coord"> X: <input type="number" id="mouse-x" value=""> </span>
+            <span class="mouse-coord"> Y: <input type="number" id="mouse-y" value=""> </span>
+        </div>
+    </div>
+{% endblock content %}

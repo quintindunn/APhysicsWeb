@@ -8,6 +8,7 @@ import flask
 
 from .home import home
 from .vector2d import vector2d
+from .graphs import graphs
 
 
 def register_routes(app: flask.Flask):
@@ -25,5 +26,6 @@ def register_routes(app: flask.Flask):
 
 routes = [
     (home, ""),
-    (vector2d, "/2dvectors")
+    (vector2d, "/2dvectors"),
+    (graphs, "/graphs")
 ]
