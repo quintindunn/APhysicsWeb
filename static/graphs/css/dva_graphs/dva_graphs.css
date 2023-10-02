@@ -38,3 +38,19 @@
 .mouse-coord input:focus {
     outline: none;
 }
+
+#function-table {
+    display: block;
+    width: 10vw;
+}
+
+.function-data {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 10vw;
+}
+
+#graph-btn {
+    width: 21vw;
+}

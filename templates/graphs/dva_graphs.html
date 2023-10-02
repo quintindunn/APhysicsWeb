@@ -21,11 +21,16 @@
             <span class="mouse-coord"> X: <input type="number" id="mouse-x" value="" disabled> </span>
             <span class="mouse-coord"> Y: <input type="number" id="mouse-y" value="" disabled> </span>
         </div>
-        <table id="function-table"><tbody>
-            <tr class="table-row">
-                <td class="table-box"><input class="table-input" placeholder="Equation" name="equation"></td>
-                <td class="table-box"><input class="table-input" placeholder="Condition" name="condition"></td>
-            </tr>
-        </tbody></table>
+        <div class="function-data">
+            <table id="function-table"><tbody>
+                <tr class="table-row">
+                    <td class="table-box"><input class="table-input" placeholder="Equation" name="equation"></td>
+                    <td class="table-box"><input class="table-input" placeholder="Condition" name="condition"></td>
+                </tr>
+            </tbody></table>
+        </div>
+        <div class="graph-btn">
+            <button id="graph-btn">Graph</button>
+        </div>
     </div>
 {% endblock content %}
