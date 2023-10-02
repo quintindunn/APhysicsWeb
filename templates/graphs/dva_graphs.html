@@ -3,6 +3,7 @@
 
 {% block head %}
     <script type="module" src="{{ url_for("static", filename="./graphs/js/dva_graphs/dva_graphs.js") }}"></script>
+    <script src="{{ url_for("static", filename="./graphs/js/dva_graphs/input_manager.js") }}" defer></script>
     <link rel="stylesheet" href="{{ url_for("static", filename="./graphs/css/dva_graphs/dva_graphs.css") }}">
 {% endblock head %}
 
@@ -20,5 +21,11 @@
             <span class="mouse-coord"> X: <input type="number" id="mouse-x" value="" disabled> </span>
             <span class="mouse-coord"> Y: <input type="number" id="mouse-y" value="" disabled> </span>
         </div>
+        <table id="function-table"><tbody>
+            <tr class="table-row">
+                <td class="table-box"><input class="table-input" placeholder="Equation" name="equation"></td>
+                <td class="table-box"><input class="table-input" placeholder="Condition" name="condition"></td>
+            </tr>
+        </tbody></table>
     </div>
 {% endblock content %}
