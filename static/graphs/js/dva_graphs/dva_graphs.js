@@ -3,7 +3,7 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 // Declare the chart dimensions and margins.
 const margin = { top: 20, bottom: 30, right: 20, left: 40}, 
       width  = 500,
-      height = 500;
+      height = 650;
 
 const graph_config = {
     line_color: "teal",
@@ -12,7 +12,7 @@ const graph_config = {
 
 // Declare the default axes
 let domain = [0, 100];
-let range = [0, 100];
+let range = [-100, 100];
 
 // Declare the x (horizontal position) scale.
 const x = d3.scaleLinear( domain, [margin.left, width - margin.right] );
@@ -42,18 +42,22 @@ function appendAxes() {
     // Add the x-axis.
     let xAxis = svg.append("g")
             .attr("transform", `translate(0,${height - margin.bottom})`)
+            .attr("class", "x-axis")
             .call(d3.axisBottom(x));
 
     // Add the y-axis.
     let yAxis = svg.append("g")
             .attr("transform", `translate(${margin.left},0)`)
+            .attr("class", "y-axis")
             .call(d3.axisLeft(y));
 
     return [xAxis, yAxis];
 }
 
 function zoom(factor) {
+    domain[0] *= factor;
     domain[1] *= factor;
+    range[0] *= factor;
     range[1] *= factor;
 
     x.domain(domain).nice();

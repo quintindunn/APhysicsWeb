@@ -54,3 +54,12 @@
 #graph-btn {
     width: 21vw;
 }
+
+.x-axis {
+    text-anchor: middle;
+    transform: translate(0, calc(50% - 5px));
+}
+
+.x-axis > g.tick:nth-child(2) {
+    display: none;
+}
