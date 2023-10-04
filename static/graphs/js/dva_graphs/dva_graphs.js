@@ -60,6 +60,7 @@ function zoom(factor) {
 
     axes[0].transition().duration(500).call(d3.axisBottom(x));
     axes[1].transition().duration(500).call(d3.axisLeft(y));
+    plot(points);
 }
 
 
@@ -91,4 +92,34 @@ function mouseCoords(event) {
     }
 }
 
+
+function plot(points, clear_graph=true) {
+    // Clear any pre-existing plots
+    if (clear_graph) {
+        let lines = document.querySelectorAll("#line");
+        lines.forEach((line) => {
+           line.remove();
+        });
+    }
+
+    const line = d3.line()
+        .x(d => x(d[0]))
+        .y(d => y(d[1]))
+        .curve(d3.curveNatural);
+
+    svg.append("path")
+        .datum(points)
+        .attr("clip-path", "url(#chart-area)")
+        .attr("fill", "none")
+        .attr("stroke", "teal")
+        .attr("stroke-width", 2)
+        .attr("d", line)
+        .attr("id", "line");
+}
+
 document.body.addEventListener("mousemove", mouseCoords);
+
+const points = [[0, 4], [1, 2], [2, 7], [3, 10], [4, 3], [5, 1], [6, 1], [7, 1], [8, 2], [9, 8], [10, 9], [11, 5], [12, 3], [13, 8], [14, 9], [15, 8], [16, 2], [17, 2], [18, 10], [19, 8], [20, 10], [21, 7], [22, 1], [23, 7], [24, 10], [25,
+8], [26, 8], [27, 1], [28, 2], [29, 3], [30, 8], [31, 5], [32, 8], [33, 4], [34, 6], [35, 1], [36, 3], [37, 2], [38, 7], [39, 2]];
+
+plot(points)
