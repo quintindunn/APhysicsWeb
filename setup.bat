@@ -4,7 +4,7 @@ setlocal enabledelayedexpansion
 echo Setting up server
 echo Searching for python3 executable...
 
-set "python_names=python3"
+set "python_names=python3 py3 python py"
 
 set found_version=0
 
@@ -15,8 +15,8 @@ for %%i in (%python_names%) do (
     where !python_exe! 2>nul
     :: Found a executable at that path.
     if !errorlevel! == 0 (
-        :: Check if python version >= 3.5.0
-        for /f %%v in ('python3 -c "import sys; print(int(sys.version_info >= (3, 5, 0)))" 2^>^&1') do set version=%%v
+        :: Check if python version >= 3.7.0
+        for /f %%v in ('python3 -c "import sys; print(int(sys.version_info >= (3, 7, 0)))" 2^>^&1') do set version=%%v
             if !version! == 1 (
                 goto FOUND_PYTHON
             )
@@ -25,7 +25,7 @@ for %%i in (%python_names%) do (
 
 :FOUND_PYTHON
 if !version! == 1 (
-    echo Found python 3.5 or greater in path!
+    echo Found python 3.7 or greater in path!
     if not exist venv (
         echo Creating virtual environment.
         %python_exe% -m venv venv
@@ -43,7 +43,12 @@ if !version! == 1 (
         python -c "import os;print(os.urandom(32))" > FLASK_SECRET.key
     )
 
+    echo Installing NPM packages.
+    cd static
+    npm install
+    cd ..
+
     echo Finished setting up, you can now run the server by running run.bat
 ) else (
-    echo Couldn't find a valid version of python3.5 or greater, are you sure that it's in the path?
+    echo Couldn't find a valid version of python 3.7 or greater, are you sure that it's in the path?
 )
