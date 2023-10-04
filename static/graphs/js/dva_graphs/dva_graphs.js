@@ -1,11 +1,14 @@
-// import {Parser} from "/static/node_modules/expr-eval/dist/index.mjs"
-
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Declare the chart dimensions and margins.
 const margin = { top: 20, bottom: 30, right: 20, left: 40}, 
       width  = 500,
       height = 500;
+
+const graph_config = {
+    line_color: "teal",
+    stroke_width: 2
+}
 
 // Declare the default axes
 let domain = [0, 100];
@@ -60,16 +63,19 @@ function zoom(factor) {
 
     axes[0].transition().duration(500).call(d3.axisBottom(x));
     axes[1].transition().duration(500).call(d3.axisLeft(y));
-    plot(points);
+
+    // If graph is clear, don't plot it on zoom.
+    if (document.querySelectorAll("#line").length > 0)
+        plot();
 }
 
 
 document.getElementById("zoom-out").addEventListener("click", e => {
-    if (e.button == 0) { zoom(+document.getElementById("factor").value); }
+    if (e.button === 0) { zoom(+document.getElementById("factor").value); }
 });
 
 document.getElementById("zoom-in").addEventListener("click", e => {
-    if (e.button == 0) { zoom(1 / +document.getElementById("factor").value); }
+    if (e.button === 0) { zoom(1 / +document.getElementById("factor").value); }
 });
 
 
@@ -93,7 +99,7 @@ function mouseCoords(event) {
 }
 
 
-function plot(points, clear_graph=true) {
+function plot(clear_graph=true) {
     // Clear any pre-existing plots
     if (clear_graph) {
         let lines = document.querySelectorAll("#line");
@@ -102,24 +108,27 @@ function plot(points, clear_graph=true) {
         });
     }
 
-    const line = d3.line()
+    // Create the line object, mapping the x-scale (var x) and y-scale (var y) to points[0] and points[1] respectively
+    let line = d3.line()
         .x(d => x(d[0]))
         .y(d => y(d[1]))
         .curve(d3.curveNatural);
 
+    // plot the points on the graph
     svg.append("path")
         .datum(points)
         .attr("clip-path", "url(#chart-area)")
         .attr("fill", "none")
-        .attr("stroke", "teal")
-        .attr("stroke-width", 2)
+        .attr("stroke", graph_config.line_color)
+        .attr("stroke-width", graph_config.stroke_width)
         .attr("d", line)
         .attr("id", "line");
 }
 
+// Register event listeners
 document.body.addEventListener("mousemove", mouseCoords);
+document.getElementById("graph-btn").addEventListener("click", plot)
 
+// Temporary hard coded points for testing
 const points = [[0, 4], [1, 2], [2, 7], [3, 10], [4, 3], [5, 1], [6, 1], [7, 1], [8, 2], [9, 8], [10, 9], [11, 5], [12, 3], [13, 8], [14, 9], [15, 8], [16, 2], [17, 2], [18, 10], [19, 8], [20, 10], [21, 7], [22, 1], [23, 7], [24, 10], [25,
 8], [26, 8], [27, 1], [28, 2], [29, 3], [30, 8], [31, 5], [32, 8], [33, 4], [34, 6], [35, 1], [36, 3], [37, 2], [38, 7], [39, 2]];
-
-plot(points)
