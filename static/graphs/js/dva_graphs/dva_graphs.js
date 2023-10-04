@@ -33,7 +33,7 @@ let axes = appendAxes();
 // Append the SVG element.
 container.append(svg.node());
 
-let myFunc = new Function(x => (x*2) + 2);
+let myFunc = new Function(x => (x*2) - 22);
 
 let points = myFunc.toPointsArray(graph_config.precision, domain[0], domain[1]);
 
@@ -94,8 +94,8 @@ function mouseCoords(event) {
         let y = -(event.offsetY - height + margin.bottom);
 
         // fix both values
-        x = Math.floor(x / (width - margin.left - margin.right) * domain[1] + 0.5);
-        y = Math.floor(y / (height - margin.bottom - margin.top) * range[1] + 0.5);
+        x = Math.floor( x * (domain[1] - domain[0]) / (width - margin.left - margin.right) + domain[0] + 0.5 );
+        y = Math.floor( y * (range[1] - range[0]) / (height - margin.bottom - margin.top) + range[0] +  0.5 );
 
         document.getElementById("mouse-x").value = x;
         document.getElementById("mouse-y").value = y;
@@ -108,9 +108,7 @@ function plot(clear_graph=true) {
     // Clear any pre-existing plots
     if (clear_graph) {
         let lines = document.querySelectorAll("#line");
-        lines.forEach((line) => {
-           line.remove();
-        });
+        lines.forEach(line => line.remove());
     }
 
     // Create the line object, mapping the x-scale (var x) and y-scale (var y) to points[0] and points[1] respectively

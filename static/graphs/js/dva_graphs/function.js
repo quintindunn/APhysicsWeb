@@ -1,5 +1,5 @@
 export class Function {
-    static precision = 0.001;
+    precision = 0.001;
 
     constructor(func) {
         this.func = func;
