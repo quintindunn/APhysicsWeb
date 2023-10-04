@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { Function } from "/static/graphs/js/dva_graphs/function.js";
 
 // Declare the chart dimensions and margins.
 const margin = { top: 20, bottom: 30, right: 20, left: 40}, 
@@ -7,7 +8,8 @@ const margin = { top: 20, bottom: 30, right: 20, left: 40},
 
 const graph_config = {
     line_color: "teal",
-    stroke_width: 2
+    stroke_width: 2,
+    precision: 100
 }
 
 // Declare the default axes
@@ -31,8 +33,9 @@ let axes = appendAxes();
 // Append the SVG element.
 container.append(svg.node());
 
+let myFunc = new Function(x => (x*2) + 2);
 
-let points = [];
+let points = myFunc.toPointsArray(graph_config.precision, domain[0], domain[1]);
 
 function appendAxes() {
     // update tracker variables
