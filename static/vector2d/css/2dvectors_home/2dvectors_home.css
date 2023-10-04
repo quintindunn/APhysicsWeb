@@ -1,0 +1,15 @@
+.page-content {
+    padding: 2vh 3vw;
+}
+
+.heading {
+    text-align: center;
+}
+
+.info > p {
+    text-indent: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
