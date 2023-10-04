@@ -177,3 +177,5 @@ cython_debug/
 
 # FLASK_SECRET
 FLASK_SECRET.key
+
+node_modules

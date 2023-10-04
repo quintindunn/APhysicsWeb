@@ -1,9 +1,47 @@
 {% extends 'vector2d/vector_template.html' %}
 {% block title %}Information on 2D Vectors{% endblock title %}
 
-{% block head %} {% endblock head %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="./vector2d/css/2dvectors_home/2dvectors_home.css") }}">
+{% endblock head %}
 
 {% block content %}
-    <h1>Information on 2-dimensional vectors...</h1>
-    <p>2D Vectors are a way of representing motion on a 2-dimensional plane. Vectors, or polar coordinates, consist of two numbers, a distance and an angle. While working with them can simplify some problems, doing conversions between them and Cartesian coordinates can be repetitive and time-consuming.</p>
+    <div class="page-content">
+        <div class="heading">
+            <h1>What are 2-Dimensional Vectors</h1>
+        </div>
+        <hr style="width: 100%; margin: 2vh 0;">
+        <div class="info">
+            <p>2D Vectors are a way of representing motion on a 2-dimensional plane. Vectors, or polar coordinates, consist of two numbers, a distance or velocity and an angle. While working with them can simplify some problems, doing conversions between them and Cartesian coordinates can be repetitive and time-consuming.</p>
+            <p>The vectors are represented with a distance/velocity and an angle in a plethora of ways, though here will be represented in a distance @ angle format, i.e. 25m@45° representing 25 meters at a 45-degree angle. Additionally, it can be represented in a diagram like this:</p>
+            <img src="#need_an_image" alt="Example image of a vector diagram">
+
+            <p>These vectors can be added using a graphical method, or a computational method. While the graphical method might be easier to wrap your head around, you can quickly lose precision and the more vectors added together, the worse it will most likely get. When adding vectors graphically it's important to remember the rule to line the vectors up tip to tail. What this means is that every vector should be placed with the start of the vector being aligned with the end of the previous vector. The full steps to add vectors graphically are as follows:</p>
+            {# ToDo: Add the steps for graphically adding vectors. #}
+            <ul>
+                <li>1. Do thing 1</li>
+                <li>2. Do thing 2</li>
+                <li>3. Do thing 3</li>
+                <li>4. Do thing 4</li>
+                <li>5. Do thing 5</li>
+            </ul>
+
+            {# ToDo: Create an example image of adding vectors graphically. #}
+            <img src="#need_an_image" alt="Example image of adding vectors graphically">
+            <p>While a tiny bit more work to understand, a much more precise method for adding the together is through math, mostly staring trigonometry. Consisting of sin, cos, tan, and the pythagorean theorem. The steps to add vectors mathematically are too fairly simple.</p>
+            {# ToDo: Add the steps for mathematically adding vectors. #}
+            <ul>
+                <li>1. Do thing 1</li>
+                <li>2. Do thing 2</li>
+                <li>3. Do thing 3</li>
+                <li>4. Do thing 4</li>
+                <li>5. Do thing 5</li>
+            </ul>
+            {# ToDo: Create an example image of adding vectors mathematically. #}
+            <img src="#need_an_image" alt="Example image of adding vectors mathematically">
+
+            <p>Thoroughly knowing how to add vectors mathematically is vital for AP Physics 1, however once you know the ropes you can use our <a href="{{ url_for("vector2d.vector_addition_calculator") }}" class="no-anchor-decor" style="color:cadetblue;">calculator</a> which can add as many vectors together as you want, and will also show you the steps!</p>
+        </div>
+    </div>
+
 {% endblock content %}
