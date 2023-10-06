@@ -1,6 +1,6 @@
-export class Function {
-    precision = 0.001;
+const precision = 0.001;
 
+export class MathFunction {
     constructor(func) {
         this.func = func;
     }

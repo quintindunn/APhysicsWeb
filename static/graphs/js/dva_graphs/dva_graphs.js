@@ -1,5 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { Function } from "/static/graphs/js/dva_graphs/function.js";
+import { MathFunction } from "/static/graphs/js/dva_graphs/function.js";
+import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
 
 // Declare the chart dimensions and margins.
 const margin = { top: 20, bottom: 30, right: 20, left: 40}, 
@@ -9,7 +10,7 @@ const margin = { top: 20, bottom: 30, right: 20, left: 40},
 const graph_config = {
     line_color: "teal",
     stroke_width: 2,
-    precision: 100
+    points: 100
 }
 
 // Declare the default axes
@@ -33,78 +34,8 @@ let axes = appendAxes();
 // Append the SVG element.
 container.append(svg.node());
 
-let myFunc = new Function(x => (x*2) - 22);
 
-let points = myFunc.toPointsArray(graph_config.precision, domain[0], domain[1]);
-
-function appendAxes() {
-    // update tracker variables
-    domain = x.domain();
-    range = y.domain();
-
-    // Add the x-axis.
-    let xAxis = svg.append("g")
-            .attr("transform", `translate(0,${height - margin.bottom})`)
-            .attr("class", "x-axis")
-            .call(d3.axisBottom(x));
-
-    // Add the y-axis.
-    let yAxis = svg.append("g")
-            .attr("transform", `translate(${margin.left},0)`)
-            .attr("class", "y-axis")
-            .call(d3.axisLeft(y));
-
-    return [xAxis, yAxis];
-}
-
-function zoom(factor) {
-    domain[0] *= factor;
-    domain[1] *= factor;
-    range[0] *= factor;
-    range[1] *= factor;
-
-    x.domain(domain).nice();
-    y.domain(range).nice();
-
-    axes[0].transition().duration(500).call(d3.axisBottom(x));
-    axes[1].transition().duration(500).call(d3.axisLeft(y));
-
-    // If graph is clear, don't plot it on zoom.
-    if (document.querySelectorAll("#line").length > 0)
-        plot();
-}
-
-
-document.getElementById("zoom-out").addEventListener("click", e => {
-    if (e.button === 0) { zoom(+document.getElementById("factor").value); }
-});
-
-document.getElementById("zoom-in").addEventListener("click", e => {
-    if (e.button === 0) { zoom(1 / +document.getElementById("factor").value); }
-});
-
-
-function mouseCoords(event) {
-    let current = document.activeElement.getAttribute("id");
-
-    if (current !== "mouse-x" && current !== "mouse-y") {
-
-        // get current mouse positions with relation to the svg
-        let x = event.offsetX - margin.left;
-        let y = -(event.offsetY - height + margin.bottom);
-
-        // fix both values
-        x = Math.floor( x * (domain[1] - domain[0]) / (width - margin.left - margin.right) + domain[0] + 0.5 );
-        y = Math.floor( y * (range[1] - range[0]) / (height - margin.bottom - margin.top) + range[0] +  0.5 );
-
-        document.getElementById("mouse-x").value = x;
-        document.getElementById("mouse-y").value = y;
-
-    }
-}
-
-
-function plot(clear_graph=true) {
+function plot(points, clear_graph=true) {
     // Clear any pre-existing plots
     if (clear_graph) {
         let lines = document.querySelectorAll("#line");
@@ -128,6 +59,124 @@ function plot(clear_graph=true) {
         .attr("id", "line");
 }
 
+
+function appendAxes() {
+    // update tracker variables
+    domain = x.domain();
+    range = y.domain();
+
+    // Add the x-axis.
+    let xAxis = svg.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .attr("class", "x-axis")
+            .call(d3.axisBottom(x));
+
+    // Add the y-axis.
+    let yAxis = svg.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y));
+
+    return [xAxis, yAxis];
+}
+
+
+function checkInput(expr) {
+    if (expr.length === 0) return 0;
+
+    let parsed;
+
+    try        { parsed = Parser.parse(expr).toJSFunction("x"); }
+    catch(err) { return parsed ?? 1; }
+
+    return parsed;
+}
+
+
+function zoom(factor) {
+    domain[0] *= factor;
+    domain[1] *= factor;
+    range[0] *= factor;
+    range[1] *= factor;
+
+    x.domain(domain).nice();
+    y.domain(range).nice();
+
+    axes[0].transition().duration(500).call(d3.axisBottom(x));
+    axes[1].transition().duration(500).call(d3.axisLeft(y));
+
+    // If graph is clear, don't plot it on zoom.
+    if (document.querySelectorAll("#line").length > 0)
+        plot();
+}
+
+
+function intakeFunctions() {
+    // clear error
+    document.getElementById("error-div").innerText = "";
+
+    // take in input
+    let tInputs = document.querySelectorAll(".table-input");
+    let equations = [];
+    let myFunc;
+
+    for (let i = 0; i < tInputs.length; i++) {
+        let inp = tInputs[i];
+
+        if (inp.getAttribute("name") === "equation") {
+            let jsFunc_q = checkInput(inp.value);
+
+            if (jsFunc_q == 0) continue;
+
+            if (jsFunc_q === 1) {
+                document.getElementById("error-div").innerText = `Malformed Input (equation ${i + 1})`;
+                continue;
+            }
+
+            equations.push(jsFunc_q);
+        }
+    }
+
+    // handle input
+    for (let i = 0; i < equations.length; i++) {
+        let func = equations[i];
+
+        myFunc = new MathFunction(func);
+
+        plot( myFunc.toPointsArray(graph_config.points, domain[0], domain[1]), i === 0 ? true : false );
+    }
+}
+
+
+function mouseCoords(e) {
+    let current = document.activeElement.getAttribute("id");
+
+    if (current !== "mouse-x" && current !== "mouse-y") {
+
+        // get current mouse positions with relation to the svg
+        let x = e.offsetX - margin.left;
+        let y = -(e.offsetY - height + margin.bottom);
+
+        // fix both values
+        x = Math.floor( x * (domain[1] - domain[0]) / (width - margin.left - margin.right) + domain[0] + 0.5 );
+        y = Math.floor( y * (range[1] - range[0]) / (height - margin.bottom - margin.top) + range[0] +  0.5 );
+
+        document.getElementById("mouse-x").value = x;
+        document.getElementById("mouse-y").value = y;
+    }
+}
+
+
+
+
+document.getElementById("zoom-out").addEventListener("click", e => {
+    if (e.button === 0) { zoom(+document.getElementById("factor").value); }
+});
+
+document.getElementById("zoom-in").addEventListener("click", e => {
+    if (e.button === 0) { zoom(1 / +document.getElementById("factor").value); }
+});
+
 // Register event listeners
 document.body.addEventListener("mousemove", mouseCoords);
-document.getElementById("graph-btn").addEventListener("click", plot);
+document.getElementById("graph-btn").addEventListener("click", intakeFunctions);
