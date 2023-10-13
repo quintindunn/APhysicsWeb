@@ -1,8 +1,10 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { MathFunction } from "/static/graphs/js/dva_graphs/function.js";
+import {MathFunction, PiecewiseFunction} from "/static/graphs/js/dva_graphs/function.js";
 import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
 
 // Declare the chart dimensions and margins.
+const equation_error_div = document.getElementById("error-div")
+
 const margin = { top: 20, bottom: 30, right: 20, left: 40}, 
       width  = 500,
       height = 650;
@@ -46,7 +48,7 @@ function plot(points, clear_graph=true) {
     let line = d3.line()
         .x(d => x(d[0]))
         .y(d => y(d[1]))
-        .curve(d3.curveNatural);
+        .curve(d3.curveNatural)
 
     // plot the points on the graph
     svg.append("path")
@@ -81,8 +83,12 @@ function appendAxes() {
 }
 
 
-function checkInput(expr) {
-    if (expr.length === 0) return 0;
+function checkInput(expr, blank_is_true=false) {
+    if (expr.length === 0) {
+        if (blank_is_true)
+            return 1;
+        return 0;
+    }
 
     let parsed;
 
@@ -113,38 +119,51 @@ function zoom(factor) {
 
 function intakeFunctions() {
     // clear error
-    document.getElementById("error-div").innerText = "";
+    equation_error_div.innerText = "";
 
     // take in input
     let tInputs = document.querySelectorAll(".table-input");
     let equations = [];
-    let myFunc;
+    let conditions = [];
 
     for (let i = 0; i < tInputs.length; i++) {
         let inp = tInputs[i];
 
-        if (inp.getAttribute("name") === "equation") {
-            let jsFunc_q = checkInput(inp.value);
+        // Append all equations
+        let inp_name = inp.getAttribute("name");
 
-            if (jsFunc_q == 0) continue;
+        if (inp_name === "equation" || inp_name === "condition") {
+            let jsFunc_eq = checkInput(inp.value);
 
-            if (jsFunc_q === 1) {
-                document.getElementById("error-div").innerText = `Malformed Input (equation ${i + 1})`;
+            if (jsFunc_eq === 0) continue;
+
+            if (jsFunc_eq === 1) {
+                equation_error_div.innerText = `Malformed Input (equation ${i + 1})`;
                 continue;
             }
 
-            equations.push(jsFunc_q);
+            if (inp_name === "equation") {
+                equations.push(jsFunc_eq);
+            } else if (inp_name === "condition") {
+                conditions.push(jsFunc_eq);
+            }
+
         }
     }
 
-    // handle input
+    // Create master function
+    let PWF = new PiecewiseFunction();
+    console.log(equations.length, equations)
     for (let i = 0; i < equations.length; i++) {
-        let func = equations[i];
+        let equation = new MathFunction(equations[i]);
+        let condition = conditions[i];
+        console.log("cond:", condition);
 
-        myFunc = new MathFunction(func);
-
-        plot( myFunc.toPointsArray(graph_config.points, domain[0], domain[1]), i === 0 ? true : false );
+        PWF.add_function(equation, condition);
     }
+
+    // Plot points
+    plot( PWF.toPointsArray(graph_config.points, domain[0], domain[1]), true );
 }
 
 
