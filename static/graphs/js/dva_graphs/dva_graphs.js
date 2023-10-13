@@ -1,5 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { MathFunction, PiecewiseFunction, preParseExpression } from "/static/graphs/js/dva_graphs/function.js";
+import { evalExpr } from "./condition_processing.js";
+
 import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
 
 // Declare the chart dimensions and margins.
@@ -84,17 +86,28 @@ function appendAxes() {
 }
 
 
-function checkInput(expr, blank_is_true=false) {
+function checkInput(expr, is_condition=false, blank_is_true=false) {
     if (expr.length === 0) {
         if (blank_is_true)
             return 1;
         return 0;
     }
 
+    if (is_condition) {
+        try {
+            evalExpr(expr, 0); // 0 As placeholder, if this throws an error it is incorrect.
+        } catch (err) {
+            return 1;  // 1 == error
+        }
+        return (x) => {
+            return evalExpr(expr, x);
+        };
+    }
+
     let parsed;
 
     try        { parsed = Parser.parse(expr).toJSFunction("x"); }
-    catch(err) { return parsed ?? 1; }
+    catch(err) { return parsed ?? 1; }  // 1 == error
 
     return parsed;
 }
@@ -136,7 +149,7 @@ function intakeFunctions() {
         if (inp_name === "equation" || inp_name === "condition") {
             let preparsed = preParseExpression(inp.value, ['x']); // Allows usage of implied multiplication
 
-            let jsFunc_eq = checkInput(preparsed);
+            let jsFunc_eq = checkInput(preparsed, inp_name === "condition");
 
             if (jsFunc_eq === 0) continue;
 
@@ -156,7 +169,6 @@ function intakeFunctions() {
 
     // Create master function
     let PWF = new PiecewiseFunction();
-    console.log(equations.length, equations)
     for (let i = 0; i < equations.length; i++) {
         let equation = new MathFunction(equations[i]);
         let condition = conditions[i];

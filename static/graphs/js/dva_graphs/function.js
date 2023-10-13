@@ -1,6 +1,3 @@
-import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
-
-
 const precision = 0.001;
 
 export class MathFunction {
@@ -48,11 +45,11 @@ export class PiecewiseFunction {
 
             let func = func_attrs[0];
             let cond = func_attrs[1];
-
             // Check the condition.
             if (cond === undefined || cond(x)) // If the condition is true, use that function
                 return func.yAt(x);
         }
+        return null
     }
 
     toPointsArray(points, min, max) {
@@ -63,8 +60,6 @@ export class PiecewiseFunction {
 
         for (let i = 0; i < range; i++) {
             let y = this.iterate(currentX);
-            if (y === undefined)
-                y = null;
             pointsArr[i] = [currentX, y];
             currentX += change;
 
