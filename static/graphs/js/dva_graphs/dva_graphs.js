@@ -39,9 +39,10 @@ let axes = appendAxes();
 container.append(svg.node());
 
 // Other global variables
-let pwf;
+let pwf;  // Piecewise function
 
 
+// Plots a function on the graph given the points.
 function plot(points, clear_graph=true) {
     // Clear any pre-existing plots
     if (clear_graph) {
@@ -88,19 +89,25 @@ function appendAxes() {
 }
 
 
-function checkInput(expr, is_condition=false, blank_is_true=false) {
+function checkInput(expr, is_condition=false) {
+    const CODES = {
+        SKIP: 0,
+        ERROR: 1
+    }
     if (expr.length === 0) {
-        if (blank_is_true)
-            return 1;
-        return 0;
+        return CODES.SKIP;
     }
 
+    // Special treatment for conditions so parsing conditions like 10<x<15 is possible
     if (is_condition) {
+        // Check if it is valid
         try {
             evalExpr(expr, 0); // 0 As placeholder, if this throws an error it is incorrect.
         } catch (err) {
-            return 1;  // 1 == error
+            return CODES.ERROR;
         }
+
+        // Return a partially formed function already containing the expression, just needing the x value.
         return (x) => {
             return evalExpr(expr, x);
         };
@@ -108,19 +115,25 @@ function checkInput(expr, is_condition=false, blank_is_true=false) {
 
     let parsed;
 
-    try        { parsed = Parser.parse(expr).toJSFunction("x"); }
-    catch(err) { return parsed ?? 1; }  // 1 == error
+    try {
+        parsed = Parser.parse(expr).toJSFunction("x"); // Return a function that takes `x` to evaluate the expr.
+    }
+    catch(err) {
+        return parsed ?? CODES.ERROR; // expression is invalid
+    }
 
     return parsed;
 }
 
 
+// Zooms the graph by multiplying the axes
 function zoom(factor) {
     domain[0] *= factor;
     domain[1] *= factor;
     range[0] *= factor;
     range[1] *= factor;
 
+    // Round the number, so it increments/decrements correctly, needed because binary floating point arithmetic.
     x.domain(domain).nice();
     y.domain(range).nice();
 
@@ -133,33 +146,42 @@ function zoom(factor) {
 }
 
 
-function intakeFunctions() {
-    // clear error
+// Takes the equation-condition pairs from the table and graphs them
+function graph_function() {
+    // Clear any errors
     equation_error_div.innerText = "";
 
-    // take in input
+    // Collect inputs from table
     let tInputs = document.querySelectorAll(".table-input");
+
     let equations = [];
     let conditions = [];
 
+    // Loop through inputs and parse them
     for (let i = 0; i < tInputs.length; i++) {
         let inp = tInputs[i];
 
-        // Append all equations
+        // Type of input, (equation or condition)
         let inp_name = inp.getAttribute("name");
 
+        // Redundancy check.
         if (inp_name === "equation" || inp_name === "condition") {
-            let preparsed = preParseExpression(inp.value, ['x']); // Allows usage of implied multiplication
+             // preparse the expression to allow implicit multiplication i.e. 5x -> 5*x.
+            let preparsed = preParseExpression(inp.value, ['x']);
 
+            // Validate the input, if it's true returns a function where you pass in the `x` value.
             let jsFunc_eq = checkInput(preparsed, inp_name === "condition");
 
+            // Blank, skip the expr.
             if (jsFunc_eq === 0) continue;
 
+            // Error, either the condition or equation is invalid.
             if (jsFunc_eq === 1) {
                 equation_error_div.innerText = `Malformed Input (equation ${i + 1})`;
                 continue;
             }
 
+            // Append the equations and conditions.
             if (inp_name === "equation") {
                 equations.push(jsFunc_eq);
             } else if (inp_name === "condition") {
@@ -171,39 +193,42 @@ function intakeFunctions() {
 
     // Create master function
     pwf = new PiecewiseFunction();
+
     for (let i = 0; i < equations.length; i++) {
         let equation = new MathFunction(equations[i]);
         let condition = conditions[i];
 
+        // Add function and condition to the master pwf.
         pwf.add_function(equation, condition);
     }
 
-    // Plot points
+    // Plot the points to the graph.
     plot( pwf.toPointsArray(graph_config.points, domain[0], domain[1]), true );
 }
 
 
+// Displays the current x, y coordinates of the mouse cursor in inputs.
 function mouseCoords(e) {
     let current = document.activeElement.getAttribute("id");
 
     if (current !== "mouse-x" && current !== "mouse-y") {
 
-        // get current mouse positions with relation to the svg
+        // Get current mouse positions with relation to the svg.
         let x = e.offsetX - margin.left;
         let y = -(e.offsetY - height + margin.bottom);
 
-        // fix both values
+        // Fix both values, so it cannot extend past the domain/range.
         x = Math.floor( x * (domain[1] - domain[0]) / (width - margin.left - margin.right) + domain[0] + 0.5 );
         y = Math.floor( y * (range[1] - range[0]) / (height - margin.bottom - margin.top) + range[0] +  0.5 );
 
+        // Display in the inputs.
         document.getElementById("mouse-x").value = x;
         document.getElementById("mouse-y").value = y;
     }
 }
 
 
-
-
+// Register event listeners
 document.getElementById("zoom-out").addEventListener("click", e => {
     if (e.button === 0) { zoom(+document.getElementById("factor").value); }
 });
@@ -212,6 +237,6 @@ document.getElementById("zoom-in").addEventListener("click", e => {
     if (e.button === 0) { zoom(1 / +document.getElementById("factor").value); }
 });
 
-// Register event listeners
+
 document.body.addEventListener("mousemove", mouseCoords);
-document.getElementById("graph-btn").addEventListener("click", intakeFunctions);
+document.getElementById("graph-btn").addEventListener("click", graph_function);
