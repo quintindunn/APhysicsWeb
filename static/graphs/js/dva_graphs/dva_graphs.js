@@ -1,5 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import {MathFunction, PiecewiseFunction} from "/static/graphs/js/dva_graphs/function.js";
+import { MathFunction, PiecewiseFunction, preParseExpression } from "/static/graphs/js/dva_graphs/function.js";
 import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
 
 // Declare the chart dimensions and margins.
@@ -134,7 +134,9 @@ function intakeFunctions() {
         let inp_name = inp.getAttribute("name");
 
         if (inp_name === "equation" || inp_name === "condition") {
-            let jsFunc_eq = checkInput(inp.value);
+            let preparsed = preParseExpression(inp.value, ['x']); // Allows usage of implied multiplication
+
+            let jsFunc_eq = checkInput(preparsed);
 
             if (jsFunc_eq === 0) continue;
 

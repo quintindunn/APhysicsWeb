@@ -71,6 +71,42 @@ export class PiecewiseFunction {
         }
         return pointsArr;
     }
-
-
 }
+
+
+export function preParseExpression(expressionString, variables) {
+    // CREDIT: https://github.com/silentmatt/expr-eval/issues/1#issuecomment-42589068
+    variables = variables.join('');
+
+    // Build an object with replacement rules. (The order matters!)
+    let re = {};
+    // Turns 'x^xy' into 'x^(x*y)'.
+    re.parenthesizeVariables = {
+      expr : new RegExp('([0-9' + variables + ']+)([' + variables + ']+)'),
+      repl : '($1*$2)',
+    };
+    // Turns '2(3+y)' into '2*(3+y)'.
+    re.parenthesisCoefficients = {
+      expr : /(\d+)([(])/i,
+      repl : '$1*$2'
+    };
+    // Turns '(x^xy)(x-y)' into '(x^xy)*(x-y)'.
+    re.parenthesisMultiplication = {
+      expr : /([)])([(])/,
+      repl : '$1*$2',
+    };
+    // Turns '2sin' into '2*sin'.
+    re.functionCoefficients = {
+      expr : /(\d+)([a-z]+)/i,
+      repl : '$1*$2',
+    };
+
+    // Apply the replacement rules.
+    for (let i in re) {
+      while (expressionString.replace(re[i].expr, re[i].repl) !== expressionString) {
+        expressionString = expressionString.replace(re[i].expr, re[i].repl);
+      }
+    }
+
+    return expressionString;
+  }
