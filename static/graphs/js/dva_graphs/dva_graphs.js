@@ -38,6 +38,9 @@ let axes = appendAxes();
 // Append the SVG element.
 container.append(svg.node());
 
+// Other global variables
+let pwf;
+
 
 function plot(points, clear_graph=true) {
     // Clear any pre-existing plots
@@ -51,7 +54,6 @@ function plot(points, clear_graph=true) {
         .defined((d) => { return d[1] !== null; })
         .x(d => x(d[0]))
         .y(d => y(d[1]))
-        .curve(d3.curveNatural)
 
     // plot the points on the graph
     svg.append("path")
@@ -127,7 +129,7 @@ function zoom(factor) {
 
     // If graph is clear, don't plot it on zoom.
     if (document.querySelectorAll("#line").length > 0)
-        plot();
+        plot(pwf.toPointsArray(graph_config.points, domain[0], domain[1]), true);
 }
 
 
@@ -168,16 +170,16 @@ function intakeFunctions() {
     }
 
     // Create master function
-    let PWF = new PiecewiseFunction();
+    pwf = new PiecewiseFunction();
     for (let i = 0; i < equations.length; i++) {
         let equation = new MathFunction(equations[i]);
         let condition = conditions[i];
 
-        PWF.add_function(equation, condition);
+        pwf.add_function(equation, condition);
     }
 
     // Plot points
-    plot( PWF.toPointsArray(graph_config.points, domain[0], domain[1]), true );
+    plot( pwf.toPointsArray(graph_config.points, domain[0], domain[1]), true );
 }
 
 
