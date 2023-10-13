@@ -158,7 +158,6 @@ function intakeFunctions() {
     for (let i = 0; i < equations.length; i++) {
         let equation = new MathFunction(equations[i]);
         let condition = conditions[i];
-        console.log("cond:", condition);
 
         PWF.add_function(equation, condition);
     }
