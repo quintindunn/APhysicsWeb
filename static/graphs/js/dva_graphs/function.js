@@ -64,7 +64,7 @@ export class PiecewiseFunction {
         for (let i = 0; i < range; i++) {
             let y = this.iterate(currentX);
             if (y === undefined)
-                continue
+                y = null;
             console.log(currentX, y);
             pointsArr[i] = [currentX, y];
             currentX += change;

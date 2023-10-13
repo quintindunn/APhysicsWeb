@@ -46,6 +46,7 @@ function plot(points, clear_graph=true) {
 
     // Create the line object, mapping the x-scale (var x) and y-scale (var y) to points[0] and points[1] respectively
     let line = d3.line()
+        .defined((d) => { return d[1] !== null; })
         .x(d => x(d[0]))
         .y(d => y(d[1]))
         .curve(d3.curveNatural)
