@@ -100,7 +100,7 @@ function checkInput(expr, is_condition=false) {
     if (is_condition) {
         // Check if it is valid
         try {
-            math.evaluate(['x=0', expr]);
+            math.evaluate(['t=0', expr]);
         } catch (err) {
             return CODES.ERROR;
         }
@@ -115,7 +115,7 @@ function checkInput(expr, is_condition=false) {
 
     try {
         // Return a function that takes `x` to evaluate the expr.
-        parsed = (x) => {return math.evaluate(["x=" + x, expr])[1]};
+        parsed = (x) => {return math.evaluate(["t=" + x, expr])[1]};
     }
     catch(err) {
         return parsed ?? CODES.ERROR; // expression is invalid
@@ -165,8 +165,10 @@ function graph_function() {
 
         // Redundancy check.
         if (inp_name === "equation" || inp_name === "condition") {
+            const expr = inp.value.replaceAll("x", "t") // Use `t` instead of `x` as mathjs throws an error with 0x
+
             // Validate the input, if it's true returns a function where you pass in the `x` value.
-            let jsFunc_eq = checkInput(inp.value, inp_name === "condition");
+            let jsFunc_eq = checkInput(expr, inp_name === "condition");
 
             // Blank, skip the expr.
             if (jsFunc_eq === 0) continue;
