@@ -3,10 +3,11 @@
 echo "Setting up server"
 echo "Searching for python3 executable..."
 
-python_names=("python3")
+python_names="python3 python py3 py"
 found_version=0
 
-for python_exe in "${python_names[@]}"; do
+for python_exe in $python_names; do
+  echo $python_exe
     echo "Checking for $python_exe in path"
 
     if command -v "$python_exe" >/dev/null 2>&1; then
@@ -22,7 +23,7 @@ done
 if [ "$found_version" -eq 1 ]; then
     echo "Found python 3.7 or greater in path!"
     if [ ! -d "venv" ]; then
-        echo "Creating virtual environment."
+        echo "Creating virtual environment, this might take a few minutes."
 
         if ! dpkg -l | grep -q "python3-venv"; then
           echo "Installing python3-venv..."
