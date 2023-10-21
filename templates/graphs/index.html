@@ -1,10 +1,51 @@
 {% extends 'graphs/graph_template.html' %}
 {% block title %} {% endblock title %}
 
-{% block head %} {% endblock head %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="./graphs/css/graphs_home/graphs_home.css") }}">
+{% endblock head %}
 
 {% block content %}
-    <div class="page-content">
+ <div class="page-content">
+        <div class="heading">
+            <h1>About Displacement/Velocity/Acceleration Time graphs</h1>
+        </div>
+        <hr style="width: 100%; margin: 2vh 0;">
+        <div class="info">
+            <p>Displacement/Time, Velocity/Time, and Acceleration/Time (DVA-T) graphs are a way of visually representing the movement of an object, each graph represents a different aspect of the objects motion. You can transform inbetween the graphs using both visual and computational methods, however for the AP Physics 1 course the visual method should be more than accurate enough and is a lot simpler.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas. Et malesuada fames ac turpis egestas. Enim eu turpis egestas pretium aenean pharetra magna. Placerat in egestas erat imperdiet. Sed libero enim sed faucibus. Nunc mattis enim ut tellus. Convallis posuere morbi leo urna molestie at elementum eu. Adipiscing vitae proin sagittis nisl rhoncus mattis. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque. Scelerisque fermentum dui faucibus in ornare quam viverra orci. Here is an example of a Displacement/Time graph:</p>
+            <img src="#need_an_image" alt="Example of a labeled/explained displacement/time graph.">
 
+            <p>Nunc consequat interdum varius sit amet mattis. Diam vulputate ut pharetra sit amet aliquam id. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing. At tellus at urna condimentum mattis pellentesque id. Netus et malesuada fames ac turpis egestas sed tempus. Ac tortor vitae purus faucibus ornare suspendisse. Auctor eu augue ut lectus. Montes nascetur ridiculus mus mauris vitae ultricies leo integer. Here is an example of a Velocity/Time graph:</p>
+            <img src="#need_an_image" alt="Example of a labeled/explained velocity/time graph.">
+
+            <p>Turpis egestas sed tempus urna et pharetra pharetra. Convallis aenean et tortor at. Ultrices dui sapien eget mi proin sed libero enim. Elit sed vulputate mi sit. Accumsan tortor posuere ac ut consequat. Vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Faucibus scelerisque eleifend donec pretium vulputate. Here is a example of an Acceleration/Time graph:</p>
+            <img src="#need_an_image" alt="Example image labeled/explain acceleration/time graph.">
+
+            <p>Knowing how to interpret these graphs can greatly help you think a problem through, one of the best ways to understand something is to tinker with it! Luckily we have a <a href="{{ url_for("graphs.dva_graphs") }}" class="no-anchor-decor" style="color:cadetblue;">tool</a> to help you understand how the graphs transform into one another!</p>
+
+            <p>To transform between the graphs visually you'll want to Aliquet nec ullamcorper sit amet risus nullam eget felis eget. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Sollicitudin tempor id eu nisl nunc mi ipsum. Id venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet.</p>
+            <ul>
+                <li>1. Do thing 1</li>
+                <li>2. Do thing 2</li>
+                <li>3. Do thing 3</li>
+                <li>4. Do thing 4</li>
+                <li>5. Do thing 5</li>
+            </ul>
+            <img src="#need_an_image" alt="Example image 1 of the steps to visually transform the graphs."><br>
+            <img src="#need_an_image" alt="Example image 2 of the steps to visually transform the graphs."><br>
+            <img src="#need_an_image" alt="Example image 3 of the steps to visually transform the graphs.">
+
+            <p>To transform between the graphs computationally you'll want to ask Zeke...</p>
+            <ul>
+                <li>1. Do thing 1</li>
+                <li>2. Do thing 2</li>
+                <li>3. Do thing 3</li>
+                <li>4. Do thing 4</li>
+                <li>5. Do thing 5</li>
+            </ul>
+
+            <p style="margin-top: 4vh">The best way to learn is to tinker, click <a href="{{ url_for("graphs.dva_graphs") }}" class="no-anchor-decor" style="color:cadetblue;">here</a> to try out our <a href="{{ url_for("graphs.dva_graphs") }}" class="no-anchor-decor" style="color:cadetblue;">DVA-T graphing tool</a>!</p>
+        </div>
     </div>
 {% endblock content %}
