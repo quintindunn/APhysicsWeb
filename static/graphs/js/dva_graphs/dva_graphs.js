@@ -114,6 +114,9 @@ function checkInput(expr, is_condition=false) {
     let parsed;
 
     try {
+        // Test expression to make sure it is valid.
+        math.evaluate(["t=" + 0, expr])
+
         // Return a function that takes `x` to evaluate the expr.
         parsed = (x) => {return math.evaluate(["t=" + x, expr])[1]};
     }
