@@ -1,5 +1,3 @@
-import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
-
 // What operators to check for in the piecewise function (pwf)
 const OPERATORS = ['<', '<=', '>', '>='];
 
@@ -34,7 +32,7 @@ export function evalExpr(expr, x) {
     // Loop through the expressions and evaluate each one, if any returns false, return false, otherwise return true.
     for (const subExpr of expressions) {
         const evalExpr = subExpr.replace('x', x.toString());
-        if (Parser.evaluate(evalExpr, { x: x }) === false) {
+        if (math.evaluate([`x=` + x, evalExpr])[1] === false) {
             return false; // Condition failed.
         }
     }

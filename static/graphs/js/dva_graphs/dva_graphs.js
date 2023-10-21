@@ -1,8 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { MathFunction, PiecewiseFunction, preParseExpression } from "/static/graphs/js/dva_graphs/function.js";
+import { MathFunction, PiecewiseFunction } from "/static/graphs/js/dva_graphs/function.js";
 import { evalExpr } from "./condition_processing.js";
-
-import { Parser } from "/static/node_modules/expr-eval/dist/index.mjs";
 
 // Declare the chart dimensions and margins.
 const equation_error_div = document.getElementById("error-div")
@@ -102,7 +100,7 @@ function checkInput(expr, is_condition=false) {
     if (is_condition) {
         // Check if it is valid
         try {
-            evalExpr(expr, 0); // 0 As placeholder, if this throws an error it is incorrect.
+            math.evaluate(['x=0', expr]);
         } catch (err) {
             return CODES.ERROR;
         }
@@ -116,7 +114,8 @@ function checkInput(expr, is_condition=false) {
     let parsed;
 
     try {
-        parsed = Parser.parse(expr).toJSFunction("x"); // Return a function that takes `x` to evaluate the expr.
+        // Return a function that takes `x` to evaluate the expr.
+        parsed = (x) => {return math.evaluate(["x=" + x, expr])[1]};
     }
     catch(err) {
         return parsed ?? CODES.ERROR; // expression is invalid
@@ -166,11 +165,8 @@ function graph_function() {
 
         // Redundancy check.
         if (inp_name === "equation" || inp_name === "condition") {
-             // preparse the expression to allow implicit multiplication i.e. 5x -> 5*x.
-            let preparsed = preParseExpression(inp.value, ['x']);
-
             // Validate the input, if it's true returns a function where you pass in the `x` value.
-            let jsFunc_eq = checkInput(preparsed, inp_name === "condition");
+            let jsFunc_eq = checkInput(inp.value, inp_name === "condition");
 
             // Blank, skip the expr.
             if (jsFunc_eq === 0) continue;
