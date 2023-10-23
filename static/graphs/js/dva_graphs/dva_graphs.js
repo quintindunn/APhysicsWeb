@@ -130,6 +130,8 @@ function checkInput(expr, is_condition=false) {
 
 // Zooms the graph by multiplying the axes
 function zoom(factor) {
+    if (factor == -Infinity || factor == Infinity || factor == NaN || factor === 0) { return; }
+
     domain[0] *= factor;
     domain[1] *= factor;
     range[0] *= factor;

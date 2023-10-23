@@ -21,19 +21,9 @@ export class MathFunction {
 
     // Generate an array of x,y pairs for graphing.
     toPointsArray(points, min, max) {
-        let range = max - min;  // What points to graph it in between.
+        let change = (max - min) / points; // What to increment the x value by, more points = a greater resolution
 
-        let pointsArr = new Array(max - min);
-
-        let change = range / points; // What to increment the x value by, more points = a greater resolution
-        let currentX = min;
-
-        for (let i = 0; i < range; i++) {
-            pointsArr[i] = [currentX, this.func(currentX)];  // Set pointsArr[i] to the x, y pair.
-            currentX += change;
-        }
-
-        return pointsArr;
+        return Array.from( { length: points }, (_, i) => [i * change, this.yAt(i * change)] );
     }
 }
 
@@ -65,18 +55,8 @@ export class PiecewiseFunction {
 
     // Generate an array of x,y pairs for graphing.
     toPointsArray(points, min, max) {
-        let range = max - min;  // What points to graph it in between.
+        let change = (max - min) / points; // What to increment the x value by, more points = a greater resolution
 
-        let pointsArr = new Array(max - min);
-
-        let change = range / points; // What to increment the x value by, more points = a greater resolution
-        let currentX = min;
-
-        for (let i = 0; i < range; i++) {
-            pointsArr[i] = [currentX, this.iterate(currentX)];  // Set pointsArr[i] to the x, y pair.
-            currentX += change;
-        }
-
-        return pointsArr;
+        return Array.from( { length: points }, (_, i) => [i * change, this.iterate(i * change)] );
     }
 }
